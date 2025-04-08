@@ -1,0 +1,38 @@
+.aside {
+    width: 25%;
+    padding: 32px 24px;
+    color: var(--light-color);
+    background-color: var(--spotlight-color);
+    font-size: 1rem;
+    border-top-right-radius: 56px;
+    border-bottom-right-radius: 56px;
+}
+
+.aside__title {
+    font-size: 1.25em;
+    font-weight: 600;
+    text-align: center;
+    font-variant: small-caps;
+    padding-block: 8px;
+    border-bottom: 1px solid var(--light-color);
+}
+
+.aside__list {
+    padding-block: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.aside__list__item {
+    padding: 4px;
+}
+
+.aside a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.aside a:hover {
+    text-decoration: underline;
+}

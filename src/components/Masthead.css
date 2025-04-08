@@ -1,0 +1,35 @@
+.masthead {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 1em;
+    padding: 8px 16px;
+    background-color: var(--dark-color);
+}
+
+.logo {
+    height: 2rem;
+    transition: all .3s ease;
+}
+
+.logo.vite:hover {
+    filter: drop-shadow(0 0 1em rgba(195, 104, 248));
+}
+
+.logo.react:hover {
+    filter: drop-shadow(0 0 1em rgb(121, 182, 252));
+}
+
+.logo.react {
+    animation: logo-spin 10s infinite linear;
+}
+
+
+@keyframes logo-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
