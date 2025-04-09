@@ -1,40 +1,32 @@
 .item__h1 {
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: 700;
     padding-bottom: .5rem;
     border-bottom: 1px solid var(--neutral-color);
-    margin-bottom: 1.5rem;
+    margin-block: 1.5rem;
 }
 
 .item__h2 {
     font-size: 1.25rem;
-    font-weight: 500;
-    margin-bottom: 1.25rem;
+    font-weight: 600;
+    margin-block: 1.25rem;
 }
 
 .item__h3 {
     font-size: 1.1rem;
+    font-weight: 500;
+    margin-top: 2rem;
     margin-bottom: 1rem;
+    color: var(--spotlight-color);
 }
 
 .item__text {
     text-indent: 2rem;
     text-align: justify;
     line-height: 1.25rem;
+    margin-block: .875rem;
 }
 
 .item__text--strong {
     font-weight: 700;
 }
-
-.item__code {
-    width: max-content;
-    padding: .25rem 2rem;
-    margin-block: 2rem;
-    margin-left: 2rem;
-    border-left: 8px solid rgba(0, 0, 0, 0.575);
-    color: rgb(77, 77, 77);
-    background-color: #5a5a5a6b;
-    border-radius: 12px;
-}
-
