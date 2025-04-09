@@ -5,6 +5,7 @@
     --neutral-color: #D4C9BE;
     --spotlight-color: #123458;
     --dark-color: #2c2c2c;
+    scroll-behavior: smooth;
 }
 
 body {

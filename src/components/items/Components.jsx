@@ -1,6 +1,7 @@
 import '@/components/items/Item.css'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import upArrow from '@/assets/images/up-icon.png'
 
 const codeExamples = [
     `
@@ -277,6 +278,57 @@ const FunctionComponent = () => {
 };
 
 export default FunctionComponent;
+    `,
+    `
+const ReactServerComponent = async () => {
+  const posts = await db.query("SELECT * FROM posts");
+
+  return (
+    <div>
+      <ul>
+        {posts?.map((post) => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default ReactServerComponent;
+    `,
+    `
+import { Suspense } from "react";
+
+const ReactServerComponent = () => {
+  const postsPromise = db.query("SELECT * FROM posts");
+
+  return (
+    <div>
+      <Suspense>
+        <ReactClientComponent promisedPosts={postsPromise} />
+      </Suspense>
+    </div>
+  );
+};
+    `,
+    `
+"use client";
+
+import { use } from "react";
+
+const ReactClientComponent = ({ promisedPosts }) => {
+  const posts = use(promisedPosts);
+
+  return (
+    <ul>
+      {posts?.map((post) => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  );
+};
+
+export { ReactClientComponent };
     `
 ];
 
@@ -414,6 +466,51 @@ export function Components() {
         </article>
 
         {/* Server Components */}
+        <article>
+          <h3 className="item__h3">React Server Components</h3>
+          <p className="item__text">
+            A adição mais recente ao React (2023) são os React Server Components (RSC), que permitem aos desenvolvedores executar componentes no servidor. Os principais benefícios são: apenas HTML é enviado para o cliente e o componente pode acessar recursos do lado do servidor.
+          </p>
+          <p className="item__text">
+            Como os Server Components são executados no servidor, não é possível fazer uma comparação direta com os exemplos anteriores, pois eles atendem a casos de uso diferentes. O exemplo abaixo mostra como um Server Component pode buscar dados de um recurso do lado do servidor (como um banco de dados) antes de enviar o JSX como HTML renderizado para o cliente:
+          </p>
+          <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+              {codeExamples[9]}
+          </SyntaxHighlighter>
+          <p className="item__text">
+            Com o surgimento dos Server Components, o React também introduziu o termo Client Components, que são os componentes tradicionais do React que rodam no lado do cliente com JavaScript — ou seja, essencialmente tudo o que você viu até agora neste guia. Os Server Components, em contraste com os Client Components, não podem usar React Hooks ou qualquer código JavaScript (por exemplo, adicionar manipuladores de eventos), pois são executados no servidor.
+          </p>
+          <p className="item__text">
+            O próprio React fornece apenas a especificação base e os blocos de construção para os Server Components, mas depende de um framework React (como o Next.js) para implementá-los.
+          </p>
+        </article>
+
+        {/* Asyn Components  */}
+        <article>
+          <h3 className="item__h3">Async Components</h3>
+          <p className="item__text">
+            Atualmente, Async Components são suportados apenas para Server Components, mas espera-se que sejam suportados para Client Components no futuro. Se um componente for marcado como async, ele pode realizar operações assíncronas (por exemplo, buscar dados).
+          </p>
+          <p className="item__text">
+            Você viu esse comportamento no exemplo anterior de Server Component, onde o componente buscava dados de um banco de dados antes de enviar o JSX renderizado como HTML para o cliente. Isso não funciona em um Client Component porque bloquearia a renderização do componente no lado do cliente. No momento, você só pode passar uma Promise do JavaScript para um Client Component:
+          </p>
+          <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+              {codeExamples[10]}
+          </SyntaxHighlighter>
+          <p className="item__text">
+            E resolvê-la com a API use do React no Client Component.
+          </p>
+          <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+            {codeExamples[11]}
+          </SyntaxHighlighter>
+          <p className="item__text">
+            No futuro, é provável que o React ofereça suporte a async components também para Client Components, permitindo buscar dados dentro de um Client Component antes de renderizá-lo. Todos os React Components compartilham um entendimento comum sobre como utilizar as React Props, pois elas são usadas apenas para passar informações para baixo na árvore de componentes. No entanto, o uso de state e side-effects varia entre Class Components e Function Components.
+          </p>
+        </article>
+
+        <a className='up-page' href="#top">
+            <img src={upArrow} alt />
+        </a>
        </>
     );
 }

@@ -30,3 +30,23 @@
 .item__text--strong {
     font-weight: 700;
 }
+
+.up-page {
+    position: sticky;
+    bottom: 10px;
+    display: block;
+    width: max-content;
+    margin-left: auto;
+    margin-right: -48px;
+    opacity: .5;
+    transition: opacity .3s ease;
+}
+
+.up-page:hover {
+    opacity: 1;
+}
+
+.up-page img {
+    height: 32px;
+    width: 32px;
+}

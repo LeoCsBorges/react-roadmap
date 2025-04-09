@@ -4,7 +4,7 @@ import './Masthead.css'
 
 export function Masthead() {
     return (
-        <header className='masthead'> 
+        <header id='top' className='masthead'> 
             <a href="https://vite.dev/" target='_blank'>
                 <img className='logo vite' src={viteLogo} alt='Logo do Vite' />
             </a>

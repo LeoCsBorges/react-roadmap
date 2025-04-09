@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 import '@/components/AsideMenu.css'
 
+
 export function AsideMenu() {
     return (
         <aside className='aside'>
@@ -13,7 +14,9 @@ export function AsideMenu() {
                     <li className='aside__list__item'>
                         <Link to='functional-components'>Functional Components</Link>
                     </li>
-                    <li className='aside__list__item'>Rendering</li>
+                    <li className='aside__list__item'>
+                        <Link to='rendering'>Rendering</Link>
+                    </li>
                     <li className='aside__list__item'>Hooks</li>
                     <li className='aside__list__item'>Routers</li>
                     <li className='aside__list__item'>State Management</li>
@@ -30,5 +33,5 @@ export function AsideMenu() {
                 </ul>
             </div>
         </aside>
-    )
+    );
 }
