@@ -508,6 +508,48 @@ export function Components() {
           </p>
         </article>
 
+        <h2 className="item__h2">Componentes, Elementos e Instâncias</h2>
+        <p className="item__text">
+          A distinção entre componente, elemento e instância é essencial para compreender o ciclo de vida e o funcionamento interno do React. O componente é a definição, o elemento é a representação virtual, e a instância é a execução real durante o processo de renderização. Ao entender essa tríade, conseguimos não apenas criar aplicações mais organizadas, mas também depurar, otimizar e escalar projetos com mais clareza.
+        </p>
+        {/* components */}
+        <h3 className="item__h3">Componentes</h3>
+        <p className="item__text">
+          Um componente em React é, fundamentalmente, uma função ou uma classe que define como uma parte da interface deve se comportar e ser exibida. Ele é uma abstração reutilizável, uma espécie de "molde" que descreve o que deve ser renderizado na tela, podendo receber props e gerenciar estado (state).
+        </p>
+        <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+          {`
+function MeuComponente({title}) {
+  return (
+    <>
+      <h1>{title}</h1>
+    </>
+  );
+}
+          `}
+        </SyntaxHighlighter>
+
+        {/* elementos */}
+        <h3 className="item__h3">Elementos</h3>
+        <p className="item__text">
+          Um elemento React é o objeto JavaScript que representa uma instância de uso de um componente ou de um elemento HTML nativo (como div, button, etc.). Ele é criado, por exemplo, quando você escreve {`<Botao texto="Clique aqui" />.`}. Por trás dos panos, React transforma isso em:
+        </p>
+        <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+          {`React.createElement(Botao, { texto: "Clique aqui" });`}
+        </SyntaxHighlighter>
+        <p className="item__text">
+          Esse elemento é uma estrutura imutável que descreve o que deve ser exibido na tela. Ele não é o componente em si, nem é a interface final renderizada no DOM – ele é uma descrição virtual, usada internamente pelo React para construir a árvore de componentes (a "Virtual DOM").
+        </p>
+
+        {/* instâncias */}
+        <h3 className="item__h3">Instâncias</h3>
+        <p className="item__text">
+          A instância aparece principalmente em componentes de classe ou em componentes funcionais com hooks. Quando o React encontra um elemento, ele renderiza esse elemento, criando uma instância do componente, que é o momento em que ele executa o componente e produz um novo elemento React (geralmente JSX).
+        </p>
+        <p className="item__text">
+          Para componentes de classe, essa instância é um objeto criado com new, e o React gerencia o ciclo de vida por meio dos métodos como componentDidMount, render, etc. Para componentes funcionais, a ideia de "instância" é mais abstrata: a cada renderização, o React executa a função do componente, com um contexto interno que mantém estado via hooks como useState e useEffect.
+        </p>
+
         <a className='up-page' href="#top">
             <img src={upArrow} alt />
         </a>
