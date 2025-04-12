@@ -1,4 +1,5 @@
-import { H1, H2, H3, Text, TextStrong, UpPage } from '@/components/items/Item.jsx'
+import { H1, H2, H3, Text, TextStrong, UpPage } from '@/components/ui/Item'
+import { ItemContainer } from '@/components/ui/ItemContainer';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -331,16 +332,16 @@ export { ReactClientComponent };
     `
 ];
 
-export function Components() {
+export function ComponentsPage() {
     return (
-       <>
+      <ItemContainer>
         <H1>Componentes</H1>
         <H2>Definição</H2>
         <Text>
             <TextStrong>Componentes</TextStrong> são funções ou classes que retornam elementos React (geralmente escritos em JSX) e representam partes da interface do usuário (UI). Eles permitem que a aplicação seja dividida em pedaços menores, reutilizáveis e independentes, facilitando a organização, manutenção e escalabilidade do código. Um componente pode ser pequeno como um Button, ou grande como uma página inteira. Componentes são funções JavaScript que retornam markup:
         </Text>
 
-        <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+        <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
             {codeExamples[0]}
         </SyntaxHighlighter>
 
@@ -351,7 +352,7 @@ export function Components() {
             <Text>
               O React inicialmente dependia do createClass (obsoleto) para definir componentes como uma factory function que criava Componentes de Classe do React sem a necessidade de uma classe em JavaScript. Essa abordagem era o padrão para construir componentes React antes da introdução do JavaScript ES6 em 2015, pois o JavaScript ES5 não possuía uma sintaxe nativa para classes.
             </Text>
-            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
             {codeExamples[1]}
             </SyntaxHighlighter>
             <Text>
@@ -360,7 +361,7 @@ export function Components() {
             <Text>
             Métodos de ciclo de vida para efeitos colaterais também estavam disponíveis. Por exemplo, para gravar o valor de texto do estado no armazenamento local do navegador sempre que ele for atualizado, poderíamos usar o método de ciclo de vida componentDidUpdate(). Além disso, o valor pode ser lido do armazenamento local quando o componente recebe seu estado inicial.
             </Text>
-            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
                 {codeExamples[2]}
             </SyntaxHighlighter>
             <Text>
@@ -374,7 +375,7 @@ export function Components() {
             <Text>
             Mixins no React (obsoletos) foram introduzidos como o primeiro padrão do React para lógica reutilizável de componentes. Com um Mixin no React, era possível extrair a lógica de um componente React para um objeto independente. Ao usar um Mixin em um componente, todas as funcionalidades do Mixin eram incorporadas ao componente:
             </Text>
-            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
                 {codeExamples[3]}
             </SyntaxHighlighter>
            <Text>
@@ -394,7 +395,7 @@ export function Components() {
             <Text>
                 Os Componentes de Classe foram introduzidos como uma forma de utilizar classes nativas do JavaScript (devido ao lançamento do ES6 em 2015), já que as classes passaram a fazer parte da linguagem.
             </Text>
-            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
                 {codeExamples[4]}
             </SyntaxHighlighter>
             <Text>
@@ -417,7 +418,7 @@ export function Components() {
             <Text>
                 A explicação mais curta para um Higher-Order Component é que ele é um componente que recebe outro componente como entrada e retorna esse componente como saída com funcionalidades estendidas. Vamos revisitar o exemplo com a funcionalidade de local storage extraída:
             </Text>
-            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
                 {codeExamples[5]}
             </SyntaxHighlighter>
             <Text>
@@ -437,19 +438,19 @@ export function Components() {
             <Text>
                 React Hooks trouxeram estado e efeitos colaterais (side-effects) para os Function Components, o que fez deles o padrão da indústria nas aplicações modernas em React. O React oferece uma variedade de hooks nativos, mas também permite a criação de hooks personalizados (custom hooks). Vamos ver como o componente de classe anterior pode ser reescrito como um Function Component com Hooks:
             </Text>
-            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
                 {codeExamples[6]}
             </SyntaxHighlighter>
             <Text>
                 O código anterior mostra o Function Component utilizando o Hook nativo useState do React para gerenciar o estado. Mas os React Hooks também foram introduzidos para trazer o gerenciamento de efeitos colaterais (side-effects) aos Function Components. O código a seguir mostra o uso do Hook useEffect do React, que é executado sempre que o valor do estado muda:
             </Text>
-            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
                 {codeExamples[7]}
             </SyntaxHighlighter>
             <Text>
                 Por fim, mas não menos importante, podemos extrair os dois hooks em um único Hook Personalizado (Custom Hook) encapsulado, que garante a sincronização do estado do componente com o local storage. No final, esse hook retorna o valor necessário e a função de atualização (setter) para serem usados no Function Component.
             </Text>
-            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
                 {codeExamples[8]}
             </SyntaxHighlighter>
             <Text>
@@ -469,7 +470,7 @@ export function Components() {
           <Text>
             Como os Server Components são executados no servidor, não é possível fazer uma comparação direta com os exemplos anteriores, pois eles atendem a casos de uso diferentes. O exemplo abaixo mostra como um Server Component pode buscar dados de um recurso do lado do servidor (como um banco de dados) antes de enviar o JSX como HTML renderizado para o cliente:
           </Text>
-          <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+          <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
               {codeExamples[9]}
           </SyntaxHighlighter>
           <Text>
@@ -489,13 +490,13 @@ export function Components() {
           <Text>
             Você viu esse comportamento no exemplo anterior de Server Component, onde o componente buscava dados de um banco de dados antes de enviar o JSX renderizado como HTML para o cliente. Isso não funciona em um Client Component porque bloquearia a renderização do componente no lado do cliente. No momento, você só pode passar uma Promise do JavaScript para um Client Component:
           </Text>
-          <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+          <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
               {codeExamples[10]}
           </SyntaxHighlighter>
           <Text>
             E resolvê-la com a API use do React no Client Component.
           </Text>
-          <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+          <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
             {codeExamples[11]}
           </SyntaxHighlighter>
           <Text>
@@ -512,7 +513,7 @@ export function Components() {
         <Text>
           Um componente em React é, fundamentalmente, uma função ou uma classe que define como uma parte da interface deve se comportar e ser exibida. Ele é uma abstração reutilizável, uma espécie de "molde" que descreve o que deve ser renderizado na tela, podendo receber props e gerenciar estado (state).
         </Text>
-        <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+        <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
           {`
 function MeuComponente({title}) {
   return (
@@ -529,7 +530,7 @@ function MeuComponente({title}) {
         <Text>
           Um elemento React é o objeto JavaScript que representa uma instância de uso de um componente ou de um elemento HTML nativo (como div, button, etc.). Ele é criado, por exemplo, quando você escreve {`<Botao texto="Clique aqui" />.`}. Por trás dos panos, React transforma isso em:
         </Text>
-        <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+        <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
           {`React.createElement(Botao, { texto: "Clique aqui" });`}
         </SyntaxHighlighter>
         <Text>
@@ -546,6 +547,6 @@ function MeuComponente({title}) {
         </Text>
 
         <UpPage />
-       </>
+      </ItemContainer>
     );
 }

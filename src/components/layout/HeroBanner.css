@@ -1,7 +1,7 @@
 .heroBanner__container {
     width: auto;
     height: 280px;
-    background-image: url('../assets/images/hero-banner.jpg');
+    background-image: url('@/assets/images/hero-banner.jpg');
     background-size: cover;
     background-position: center;
     display: flex;

@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import '@/components/AsideMenu.css'
+import './AsideMenu.css';
 
 
 export function AsideMenu() {

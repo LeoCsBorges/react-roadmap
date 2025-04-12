@@ -1,5 +1,5 @@
-import '@/components/HeroBanner.css'
 import { Link } from "react-router"
+import './HeroBanner.css'
 
 export function HeroBanner() {
     return (

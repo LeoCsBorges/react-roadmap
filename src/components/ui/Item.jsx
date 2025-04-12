@@ -1,4 +1,4 @@
-import '@/components/items/Item.css'
+import './Item.css'
 import upArrow from '@/assets/images/up-icon.png'
 
 export const H1 = ({children}) => <h1 className='item__h1'>{children}</h1>;

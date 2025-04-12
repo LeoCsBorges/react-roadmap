@@ -1,17 +1,20 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 import { HomePage } from "@/pages/HomePage";
-import { HomeContent } from "@/components/HomeContent";
-import { Components } from "@/components/items/Components";
-import { FunctionalComponents } from "@/components/items/FunctionalComponents-";
+import { ComponentsPage } from "@/pages/ComponentsPage";
+import { FunctionalComponentsPage } from "@/pages/FunctionalComponentsPage";
+import { RootLayout } from "./components/layout/RootLayout";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />}>
-          <Route index element={<HomeContent />} />
-          <Route path="components" element={<Components />} />
-          <Route path="functional-components" element={<FunctionalComponents />} />
+        <Route element={<RootLayout />} >
+          <Route index element={<HomePage />} />
+          <Route path="components" element={<ComponentsPage />} />
+          <Route path="functional-components" element={<FunctionalComponentsPage />} />
+
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

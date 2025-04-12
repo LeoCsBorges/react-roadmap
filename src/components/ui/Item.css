@@ -33,7 +33,7 @@
 
 .up-page {
     position: sticky;
-    bottom: 10px;
+    top: 90%;
     display: block;
     width: max-content;
     margin-left: auto;
