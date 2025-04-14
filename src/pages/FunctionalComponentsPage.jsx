@@ -218,6 +218,151 @@ export default App;
                 Ao fornecer um event handler (manipulador de evento) para o campo de input, conseguimos executar uma função de callback sempre que o campo de input mudar seu valor. Como argumento dessa função de callback, recebemos um evento sintético do React (synthetic React event), que contém o valor atual do campo de input. Esse valor é usado para atualizar o estado do Function Component por meio de uma arrow function inline.
             </Text>
 
+            {/* event handler */}
+            <H2>Event Handler</H2>
+            <Text>
+            No exemplo anterior, usamos um event handler onChange para o campo de input. Isso é apropriado, pois queremos ser notificados toda vez que o valor interno do input for alterado. No caso de outros elementos de formulário em HTML, você tem diversos outros event handlers do React à sua disposição, como: onClick – quando o elemento é clicado, onMouseDown – quando o botão do mouse é pressionado sobre o elemento, onBlur – quando o elemento perde o foco
+            </Text>
+            <Text>
+            Até agora, usamos uma arrow function inline como event handler para o nosso campo de input. Mas e se extrairmos essa função e a transformarmos em uma função nomeada dentro do componente? Ela se tornaria assim uma função separada e reutilizável:
+            </Text>
+            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+                {`
+import React, { useState } from 'react';
+
+const App = () => {
+  return <Headline />;
+};
+
+const Headline = () => {
+  const [greeting, setGreeting] = useState(
+    'Hello Function Component!'
+  );
+
+  const handleChange = event => setGreeting(event.target.value);
+
+  return (
+    <div>
+      <h1>{greeting}</h1>
+
+      <input type="text" value={greeting} onChange={handleChange} />
+    </div>
+  );
+};
+
+export default App;
+                `}
+            </SyntaxHighlighter>
+            <Text>
+            Usamos uma arrow function para definir a função dentro do componente. Se você já usou métodos de classe em React Class Components, essa forma de definir funções dentro de um React Function Component é o equivalente funcional. Você pode chamá-las de algo como “React Function Component Methods”, equivalente aos métodos das class components. Você pode criar e adicionar quantas funções quiser dentro de um Functional Component para atuarem como event handlers explícitos ou para encapsular outras lógicas de negócio.
+            </Text>
+
+            {/* callback function */}
+            <H2>Callback Function</H2>
+            <Text>
+            Tudo acontece dentro do nosso Child Function Component. Nenhuma prop é passada para ele, embora você já tenha visto anteriormente como uma variável string (como a greeting) pode ser passada do Parent Component para o Child Component. Mas... é possível passar uma função como prop para um componente também? De alguma forma, deve ser possível chamar uma função de um componente a partir do lado de fora, certo? Vamos ver como isso funciona:
+            </Text>
+            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+                {`
+import React, { useState } from 'react';
+
+const App = () => {
+  const [greeting, setGreeting] = useState(
+    'Hello Function Component!'
+  );
+
+  const handleChange = event => setGreeting(event.target.value);
+
+  return (
+    <Headline headline={greeting} onChangeHeadline={handleChange} />
+  );
+};
+
+const Headline = ({ headline, onChangeHeadline }) => (
+  <div>
+    <h1>{headline}</h1>
+
+    <input type="text" value={headline} onChange={onChangeHeadline} />
+  </div>
+);
+
+export default App;
+                `}
+            </SyntaxHighlighter>
+            <Text>
+              É só isso! Você pode passar uma função para um Child Component e deixar que o Parent Component cuide do que acontece com essa função. Você também pode executar algo dentro do Child Component (por exemplo, no componente Headline) antes de chamar a função onChangeHeadline — como aplicar um trim() no valor — para adicionar funcionalidades extras no componente filho. É assim que você consegue chamar uma função do componente pai a partir de um componente filho.
+            </Text>
+
+            {/* async  function */}
+            <H2>Async Function in Component with React</H2>
+            <Text>
+            Outro caso especial pode ser uma função assíncrona dentro de um componente React. Mas, na verdade, não há nada de especial nisso, porque não importa se a função é executada de forma assíncrona ou não.
+            </Text>
+            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+                {`
+import React from 'react';
+
+const App = () => {
+  const sayHello = () =>
+    setTimeout(() => console.log('Hello'), 1000);
+
+  return <Button handleClick={sayHello} />;
+};
+
+const Button = ({ handleClick }) => (
+  <button type="button" onClick={handleClick}>
+    Button
+  </button>
+);
+
+export default App;
+                `}
+            </SyntaxHighlighter>
+            <Text>
+            A função é executada com atraso (delay) sem nenhuma instrução adicional da sua parte dentro do componente. O componente também será rerenderizado de forma assíncrona caso as props ou o state mudem. Veja o exemplo de código a seguir para entender como definimos um novo estado com um atraso artificial, usando setTimeout:
+            </Text>
+            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers>
+                {`
+import React, { useState } from 'react';
+
+const App = () => {
+  const [count, setCount] = useState(0);
+
+  const handleIncrement = () =>
+    setTimeout(
+      () => setCount(currentCount => currentCount + 1),
+      1000
+    );
+
+  const handleDecrement = () =>
+    setTimeout(
+      () => setCount(currentCount => currentCount - 1),
+      1000
+    );
+
+  return (
+    <div>
+      <h1>{count}</h1>
+
+      <Button handleClick={handleIncrement}>Increment</Button>
+      <Button handleClick={handleDecrement}>Decrement</Button>
+    </div>
+  );
+};
+
+const Button = ({ handleClick, children }) => (
+  <button type="button" onClick={handleClick}>
+    {children}
+  </button>
+);
+
+export default App;
+                `}
+            </SyntaxHighlighter>
+            <Text>
+            Também vale notar que estamos usando uma função de callback dentro da função setCount para acessar o estado atual. Como as funções setter do useState são executadas de forma assíncrona por natureza, você precisa garantir que a mudança de estado seja feita com base no estado atual, e não em um estado desatualizado (stale state).
+            </Text>
+
             <UpPage />
         </ItemContainer>
     )

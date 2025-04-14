@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import { HomePage } from "@/pages/HomePage";
 import { ComponentsPage } from "@/pages/ComponentsPage";
 import { FunctionalComponentsPage } from "@/pages/FunctionalComponentsPage";
+import { ComponentBasicsPage } from "@/pages/ComponentBasicsPage";
 import { RootLayout } from "./components/layout/RootLayout";
 import { NotFoundPage } from "./pages/NotFoundPage";
 
@@ -13,6 +14,7 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="components" element={<ComponentsPage />} />
           <Route path="functional-components" element={<FunctionalComponentsPage />} />
+          <Route path="component-basics" element={<ComponentBasicsPage />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Route>
