@@ -458,6 +458,145 @@ function App({ list, isLoading }) {
           {/* composition */}
           <article>
             <H2>Composition</H2>
+            <Text>
+            Existe uma propriedade (prop do React) que nos ajuda com esse dilema em nosso componente React: a prop children do React. É uma prop especial fornecida pelo React para renderizar algo dentro de um componente, mesmo quando o componente não tem conhecimento prévio disso. Um exemplo básico pode ser o seguinte:
+            </Text>
+            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+              {
+`
+const Button = ({ onClick, type = 'button', children }) => (
+  <button type={type} onClick={onClick}>
+    {children}
+  </button>
+);
+`
+              } </SyntaxHighlighter>
+              <Text>
+              O elemento button se torna um componente reutilizável chamado Button, enquanto o componente Button não sabe exatamente o que ele renderiza — exceto que sempre será um botão. Vamos usar a prop children no nosso exemplo anterior para substituir o elemento HTML form por um componente Form, que renderiza todo o seu conteúdo interno usando a prop children do React:
+              </Text>
+              <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+              {
+`
+const UsernameForm = ({ onSubmit }) => {
+  const [username, setUsername] = useState('');
+
+  return (
+    <Form
+      onSubmit={event => {
+        onSubmit(username);
+        event.preventDefault();
+      }}
+    >
+      <label>
+        Your name:
+        <input
+          type="text"
+          value={username}
+          onChange={event => setUsername(event.target.value)}
+        />
+      </label>
+
+      <button type="submit">Send</button>
+    </Form>
+  );
+};
+
+const Form = ({ onSubmit, children }) => (
+  <form onSubmit={onSubmit}>{children}</form>
+);
+`
+              } </SyntaxHighlighter>
+              <Text>
+              Vamos continuar com essa substituição para os outros elementos React antes de colhermos os frutos de ter um componente de Formulário React componível. O componente Button que foi mostrado anteriormente pode ser usado para renderizar nosso elemento de botão:
+              </Text>
+              <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+              {
+`
+const UsernameForm = ({ onSubmit }) => {
+  const [username, setUsername] = useState('');
+
+  return (
+    <Form
+      onSubmit={event => {
+        onSubmit(username);
+        event.preventDefault();
+      }}
+    >
+      <label>
+        Your name:
+        <input
+          type="text"
+          value={username}
+          onChange={event => setUsername(event.target.value)}
+        />
+      </label>
+
+      <Button type="submit">Send</Button>
+    </Form>
+  );
+};
+
+const Form = ({ onSubmit, children }) => (
+  <form onSubmit={onSubmit}>{children}</form>
+);
+
+const Button = ({ onClick, type = 'button', children }) => (
+  <button type={type} onClick={onClick}>
+    {children}
+  </button>
+);
+`
+              } </SyntaxHighlighter>
+              <Text>
+              Por fim, mas não menos importante, o elemento HTML do campo de entrada (input) e seu rótulo (label). Vamos extraí-los para outro componente React reutilizável:
+              </Text>
+              <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+              {
+`
+const UsernameForm = ({ onSubmit }) => {
+  const [username, setUsername] = useState('');
+
+  return (
+    <Form
+      onSubmit={event => {
+        onSubmit(username);
+        event.preventDefault();
+      }}
+    >
+      <InputField value={username} onChange={setUsername}>
+        Your name:
+      </InputField>
+
+      <Button type="submit">Send</Button>
+    </Form>
+  );
+};
+
+const Form = ({ onSubmit, children }) => (
+  <form onSubmit={onSubmit}>{children}</form>
+);
+
+const Button = ({ onClick, type = 'button', children }) => (
+  <button type={type} onClick={onClick}>
+    {children}
+  </button>
+);
+
+const InputField = ({ value, onChange, children }) => (
+  <label>
+    {children}
+    <input
+      type="text"
+      value={value}
+      onChange={event => onChange(event.target.value)}
+    />
+  </label>
+);
+`
+              } </SyntaxHighlighter>
+              <Text>
+              Como você pode ver, o componente InputField se torna genérico/abstrato, enquanto todas as props são passadas para o componente para especializá-lo. Além disso, esse componente vai um passo além dos componentes Form e Button, pois oferece um novo tipo de composição de "elemento HTML", encapsulando um rótulo (label) com um campo de entrada (input) em um único componente. Ele pode ser reutilizado tanto dentro do componente Form quanto em qualquer outro lugar. Os três passos anteriores transformaram nosso Form em um componente React componível. O Form renderiza o elemento HTML form, mas tudo dentro dele é renderizado com a prop children do React. O mesmo se aplica aos componentes dentro do Form, que seguem o mesmo princípio de composição, simplesmente renderizando qualquer conteúdo passado para eles por meio da propriedade children.
+              </Text>
           </article>
 
           <UpPage />

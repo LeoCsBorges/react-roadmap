@@ -5,6 +5,7 @@ import { FunctionalComponentsPage } from "@/pages/FunctionalComponentsPage";
 import { ComponentBasicsPage } from "@/pages/ComponentBasicsPage";
 import { RootLayout } from "./components/layout/RootLayout";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import { RenderingPage } from "./pages/RenderingPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="components" element={<ComponentsPage />} />
           <Route path="functional-components" element={<FunctionalComponentsPage />} />
           <Route path="component-basics" element={<ComponentBasicsPage />} />
+          <Route path="rendering" element={<RenderingPage />} />
 
           <Route path="*" element={<NotFoundPage />} />
         </Route>
