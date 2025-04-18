@@ -192,7 +192,134 @@ function UserList() {
 
             {/* Refs */}
             <article>
+                <H2>Refs</H2>
+                <Text>
+                Ocasionalmente, ao construir aplicações em React, podemos querer armazenar alguns dados que não são state nas instâncias dos componentes. Ou seja, dados que queremos armazenar, mas que não necessitam de um rerender da instância do componente. 
+                </Text>
+                <Text>
+                Por exemplo, suponha que queremos armazenar o elemento real do DOM associado a uma instância de componente, para que possamos acessá-lo diretamente e, possivelmente, executar alguns métodos do DOM sobre ele. Um exemplo clássico disso é focar um elemento input após ele ser renderizado no React, o que é feito chamando o método focus() no nó do elemento input do DOM. Nesses casos, obviamente não precisamos usar o state para armazenar esses dados. O que precisamos, na verdade, é de uma <TextStrong>ref</TextStrong>.
+                </Text>
+                <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`Uma ref é uma forma de armazenar dados que não fazem parte do state em uma instância de componente.`
+                } </SyntaxHighlighter>
+                <Text>
+                Como você pode imaginar, o termo ref é uma forma abreviada de reference (referência). Nesse sentido, uma ref é simplesmente uma referência, ou seja, um objeto que armazena dados que não fazem parte do state para uma determinada instância de componente. Como as refs não estão relacionadas ao state dos componentes, elas não causam nenhum rerender.
+                </Text>
+                <H3>useRef() Hook</H3>
+                <Text>
+                Assim como o hook useState() conecta um componente ao utilitário de state do React, o hook useRef() o conecta ao utilitário de ref do React. Basicamente, chamar useRef() (dentro de um componente) cria uma nova ref. A função do hook pode receber um valor inicial para a ref. useRef() retorna a ref propriamente dita, ou seja, uma referência para um objeto que armazena os dados atuais da ref. Esse objeto não é o dado em si; em vez disso, ele possui uma propriedade <TextStrong>current</TextStrong>, que contém os dados da ref que fornecemos ao chamar useRef().
+                </Text>
+                <Text>
+                Vamos supor que queremos salvar o momento em que uma determinada seleção foi feita e, em seguida, exibi-lo quando a seleção for clicada, utilizando um alert. Graças às refs, isso é extremamente fácil de fazer:
+                </Text>
+                <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`function LanguageItem({children}) {
+   const createdAt = useRef(new Date());
 
+   return (
+      <li onClick={() => alert(createdAt.current)}>{children}</li>
+   );
+}`
+                } </SyntaxHighlighter>
+                <Text>
+                No momento em que um 'LanguageItem' é criado pela primeira vez, o horário é registrado naquele instante e armazenado em uma ref criada. A partir daí, a ref permanece como está, ou seja, não é atualizada. Lembre-se de que essa mesma tarefa poderia ter sido realizada usando state, mas não há absolutamente nenhuma necessidade disso. Se não precisamos de state, então simplesmente não devemos usá-lo. Simples assim.
+                </Text>
+                <Text>
+                Assim como o state é preservado entre os rerenders dos elementos do React, as refs também são preservadas exatamente da mesma forma. Isso também significa que, se o elemento for descartado, suas refs também serão descartadas. Agora, vamos ver como acessar diretamente elementos do DOM por meio de refs no React.
+                </Text>
+                <H3>A prop Ref</H3>
+                <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`function App() {
+   return (
+      <>
+         <div>A div</div>
+         <button>Get dimensions of div</button>
+      </>
+   );
+}`
+                } </SyntaxHighlighter>
+                <Text>
+                Considere o código acima. Queremos armazenar uma referência ao nó do elemento DOM correspondente ao elemento div aqui, para que possamos recuperar sua largura (width) e altura (height) posteriormente. Usando refs e nosso conhecimento sobre o DOM, aqui está uma maneira de fazer isso:  
+                </Text>
+                <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`function App() {
+   const divElement = useRef(document.querySelector('div'));
+
+   function onClick() {
+      const width = divElement.current.offsetWidth;
+      const height = divElement.current.offsetHeight;
+      alert(Width: $width, Height: $height);
+   }
+
+   return (
+      <>
+         <div>A div</div>
+         <button onClick={onClick}>Get dimensions of div</button>
+      </>
+   );
+}`
+                } </SyntaxHighlighter>
+                <Text>
+                O método document.querySelector() seleciona o elemento div, que então é armazenado na ref divElement. Agora, quando o botão é clicado, podemos facilmente acessar esse elemento div e recuperar suas dimensões, usando a ref divElement. Embora esse exemplo funcione, há um pequeno problema com ele. Tivemos que procurar manualmente o elemento DOM desejado usando querySelector() e, em seguida, inicializamos a divElement com isso. O React simplifica essa abordagem, e com razão, com a ajuda da ref prop. Usando a ref prop, não precisamos mais fazer nenhuma seleção manual de elementos! Vamos ver como a ref funciona.
+                </Text>
+                <Text>
+                Primeiro, como antes, criamos uma ref para armazenar uma referência a um elemento DOM. Isso, obviamente, significa chamar useRef(). Em seguida, vamos até o elemento React cujo elemento DOM correspondente precisamos acessar e definimos a ref prop nele. O valor dessa ref prop é simplesmente a ref que criamos antes. Lembre-se de que uma ref é um objeto e, portanto, passar uma para a ref prop significa que o createElement() agora tem controle total sobre essa ref e pode modificar qualquer uma de suas propriedades. E é exatamente isso que acontece — o React pega a ref passada pela ref prop de um elemento e define a propriedade current correspondente ao elemento DOM. Vamos usar a ref para reimplementar o programa anterior:
+                </Text>
+                <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`function App() {
+   const divElement = useRef(); // No need to initialize the ref.
+
+   function onClick() {
+      const width = divElement.current.offsetWidth;
+      const height = divElement.current.offsetHeight;
+      alert(Width: $width, Height: $height);
+   }
+
+   return (
+      <>
+         <div ref={divElement}>A div</div>
+         <button onClick={onClick}>Get dimensions of div</button>
+      </>
+   );
+}`
+                } </SyntaxHighlighter>
+                <Text>
+                Como você pode ver, esse código é muito mais compacto e simples do que o anterior. Ao adotar essa abordagem de usar a ref prop, não precisamos nos preocupar em selecionar elementos DOM manualmente — basta decidir qual nó DOM correspondente ao elemento React queremos referenciar e, em seguida, passar a ref prop para ele.
+                </Text>
+            </article>
+
+            {/* Eventos */}
+            <article>
+              <H3>Eventos</H3>
+              <Text>
+              No React, os events (eventos) funcionam de forma semelhante aos eventos do DOM em JavaScript, mas com algumas diferenças importantes que tornam o uso mais consistente e multiplataforma. React utiliza um sistema de eventos sintéticos chamado SyntheticEvent, que encapsula os eventos nativos do navegador e fornece uma interface padronizada entre diferentes navegadores. Isso significa que, independentemente de como um navegador implementa um determinado evento, o React garante que seu comportamento será previsível e coerente. Os eventos em React são nomeados utilizando a convenção camelCase, utilizando 'handle' e o evento referido. São passados como funções dentro do JSX, como por exemplo:
+              </Text>
+              <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`import React from 'react';
+
+function App() {
+  function handleClick() {
+    console.log('Button click ...');
+  }
+
+  return (
+    <div>
+      <button type="button" onClick={handleClick}>
+        Event Handler
+      </button>
+    </div>
+  );
+}`
+                } </SyntaxHighlighter>
+              <Text>
+              Além disso, o React gerencia o ciclo de vida dos eventos de forma otimizada, o que contribui para a performance da aplicação. Um ponto importante é que, ao contrário do JavaScript tradicional, você não pode retornar false para prevenir o comportamento padrão de um evento; em vez disso, deve-se usar event.preventDefault(). Também é possível acessar o evento nativo, caso necessário, através da propriedade nativeEvent do SyntheticEvent. Eventos mais comuns incluem onChange para inputs, onSubmit para formulários, onMouseEnter, onFocus, entre outros. Entender como os eventos funcionam no React é essencial para construir interfaces interativas e responsivas, garantindo que a lógica de interação esteja desacoplada do DOM e integrada ao modelo declarativo do React.
+              </Text>
             </article>
 
             <UpPage />
