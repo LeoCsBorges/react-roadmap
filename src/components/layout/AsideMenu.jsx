@@ -20,7 +20,9 @@ export function AsideMenu() {
                     <li>
                         <Link to='rendering'>Rendering</Link>
                     </li>
-                    <li>Hooks</li>
+                    <li>
+                        <Link to='hooks'>Hooks</Link>
+                    </li>
                     <li>Routers</li>
                     <li>State Management</li>
                     <li>Writting CSS</li>
