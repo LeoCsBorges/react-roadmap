@@ -346,7 +346,226 @@ export default App;`
                 <Text>
                 Agora, estamos utilizando a capacidade do Hook useState de aceitar uma função em vez de um valor para atualizar o estado. Essa função tem como parâmetro o timer atual. Portanto, não precisamos mais fornecer o timer de fora, e podemos rodar o effect apenas uma vez na montagem do componente (usando um array de dependências vazio). É por isso que a função de limpeza aqui é chamada somente quando o componente é desmontado (devido à transição de página ou à renderização condicional).
                 </Text>
+            </article>
 
+            {/* useRef */}
+            <article>
+                <H2>useRef</H2>
+                <Text>
+                O useRef é um Hook do React que te permite acessar ou manter uma referência mutável que não causa re-renderização do componente quando alterada. É muito usado para acessar elementos do DOM diretamente, guardar valores persistentes entre renderizações (como uma variável "global" que não desaparece), evitar reexecução de efeitos em useEffect
+                </Text>
+
+                <H3>useRef: Acessando o DOM</H3>
+                <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`import { useRef } from "react";
+
+function InputFocus() {
+  const inputRef = useRef(null);
+
+  const handleClick = () => {
+    inputRef.current.focus();
+  };
+
+  return (
+    <>
+      <input ref={inputRef} type="text" />
+      <button onClick={handleClick}>Focar no input</button>
+    </>
+  );
+}`
+                } </SyntaxHighlighter>
+
+                <H3>useRef: Guardar valores entre renderizações</H3>
+                <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`import { useState, useRef, useEffect } from "react";
+
+function RenderCount() {
+  const [count, setCount] = useState(0);
+  const renderCount = useRef(1);
+
+  useEffect(() => {
+    renderCount.current += 1;
+  });
+
+  return (
+    <>
+      <h1>Você clicou {count} vezes</h1>
+      <h2>O componente renderizou {renderCount.current} vezes</h2>
+      <button onClick={() => setCount(count + 1)}>Clique</button>
+    </>
+  );
+}`
+                } </SyntaxHighlighter>
+                
+                <H3>useRef: controlar efeitos que executem apenas após a montagem</H3>
+                <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`import { useEffect, useRef, useState } from "react";
+
+function UpdateLogger({ value }) {
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    console.log("O valor foi atualizado:", value);
+  }, [value]);
+
+  return <div>{value}</div>;
+}`
+                } </SyntaxHighlighter>
+            </article>
+
+            {/* useCallback */}
+            <article>
+              <H2>useCallback</H2>
+              <Text>
+              O Hook useCallback() do React serve para memorizar uma função, evitando que ela seja recriada a cada renderização do componente. Isso é especialmente útil quando essa função é passada como prop para um componente filho que usa React.memo, pois evita re-renderizações desnecessárias. Por exemplo, imagine um contador simples:
+              </Text>
+              <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`import { useState, useCallback } from "react";
+
+function Contador() {
+  const [contador, setContador] = useState(0);
+
+  const incrementar = useCallback(() => {
+    setContador((prev) => prev + 1);
+  }, []);
+
+  return (
+    <div>
+      <h1>{contador}</h1>
+      <button onClick={incrementar}>Incrementar</button>
+    </div>
+  );
+}`
+              } </SyntaxHighlighter>
+              <Text>
+              Neste caso, a função incrementar só é criada uma vez, pois o array de dependências está vazio ([]). Isso significa que, mesmo que o componente Contador re-renderize, a função incrementar continua sendo a mesma — economizando processamento e evitando renderizações desnecessárias em filhos. Agora veja um exemplo mais completo, onde essa função incrementar é passada para um componente filho memoizado com React.memo:
+              </Text>
+              <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+              {
+`import { useState, useCallback, memo } from "react";
+
+const Botao = memo(({ onClick }) => {
+  console.log("Botão renderizado");
+  return <button onClick={onClick}>Clique</button>;
+});`
+              } </SyntaxHighlighter>
+              <Text>
+              O componente Botao só será re-renderizado se a prop onClick mudar. Se não usássemos useCallback, a função incrementar seria recriada em cada renderização do componente pai, fazendo com que o botão re-renderizasse à toa. Com useCallback, isso é evitado:
+              </Text>
+              <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+              {
+`function App() {
+  const [contador, setContador] = useState(0);
+  const [texto, setTexto] = useState("");
+
+  const incrementar = useCallback(() => {
+    setContador((prev) => prev + 1);
+  }, []);
+
+  return (
+    <>
+      <input value={texto} onChange={(e) => setTexto(e.target.value)} />
+      <p>Texto: {texto}</p>
+      <p>Contador: {contador}</p>
+      <Botao onClick={incrementar} />
+    </>
+  );
+}`
+              } </SyntaxHighlighter>
+
+              <Text>
+              Nesse exemplo, alterar o texto no input atualiza o estado texto, mas não afeta a função incrementar, pois ela continua a mesma graças ao useCallback. Isso significa que o Botao não será re-renderizado quando só o texto mudar. Por fim, é importante entender a diferença entre useCallback e useMemo. Ambos servem para memorizar algo, mas enquanto useCallback memoriza uma função, o useMemo memoriza o resultado de uma função:
+              </Text>
+              <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+              {
+`const funcaoMemoizada = useCallback(() => {
+  // retorna uma função
+}, []);
+
+const valorMemoizado = useMemo(() => {
+  return calculoPesado();
+}, []);`
+              } </SyntaxHighlighter>
+              <Text>
+              Se você quer memorizar funções, use useCallback. Se quer memorizar valores ou cálculos pesados, use useMemo.
+              </Text>
+
+            </article>
+
+            {/* useMemo */}
+            <article> 
+              <H2>useMemo</H2>
+              <Text>
+              O Hook useMemo() é utilizado para memorizar valores derivados de cálculos pesados, garantindo que o React só os recalcule quando suas dependências mudarem. Assim como useCallback() memoriza funções, o useMemo() memoriza valores retornados de funções. Em aplicações com muitos componentes e re-renderizações frequentes, useMemo() pode ser uma ferramenta importante para otimizar a performance, evitando reexecuções desnecessárias de lógica computacionalmente custosa.
+              </Text>
+              <Text>
+              Você deve considerar usar useMemo() quando: a) Um cálculo é pesado e pode ser evitado se nada mudou; b) Um valor calculado depende de variáveis que nem sempre mudam; c) Você precisa evitar renderizações desnecessárias com base em valores derivados.
+              </Text>
+              <H3>Exemplo simples de useMemo()</H3>
+              <Text>
+              Vamos imaginar um componente que calcula um valor lento com base em um número digitado pelo usuário:
+              </Text>
+              <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`import { useState, useMemo } from "react";
+
+function App() {
+  const [numero, setNumero] = useState(0);
+  const [texto, setTexto] = useState("");
+
+  const resultadoLento = useMemo(() => {
+    console.log("Calculando valor lento...");
+    let total = 0;
+    for (let i = 0; i < 1e9; i++) {
+      total += i;
+    }
+    return numero * 2;
+  }, [numero]);
+
+  return (
+    <div>
+      <input
+        type="number"
+        value={numero}
+        onChange={(e) => setNumero(Number(e.target.value))}
+      />
+      <input
+        type="text"
+        value={texto}
+        onChange={(e) => setTexto(e.target.value)}
+        placeholder="Texto qualquer"
+      />
+      <p>Resultado: {resultadoLento}</p>
+    </div>
+  );
+}`
+              } </SyntaxHighlighter>
+              <Text>
+              Nesse exemplo, a função dentro de useMemo() representa um cálculo pesado (simulado com um for gigante). O resultado desse cálculo depende apenas de numero. Se o usuário digitar no segundo input (texto), o componente pai re-renderiza, mas o cálculo não é refeito — porque numero não mudou. Sem o useMemo(), o cálculo ocorreria toda vez que qualquer parte do componente atualizasse, mesmo que o número continuasse o mesmo.
+              </Text>
+              <H3>Cuidados com o useMemo()</H3>
+              <Text>
+              Apesar de parecer útil em muitos cenários, useMemo() não deve ser usado em excesso. Ele adiciona complexidade ao código e só traz benefícios quando realmente há ganho de performance perceptível. Use-o principalmente quando: um cálculo for pesado, houver re-renderizações frequentes, você estiver lidando com grandes listas, dados ou lógicas computacionais mais exigentes.
+              </Text>
+              <H3>Memoization</H3>
+              <Text>
+              Memoization (ou "memoização", em português) é uma técnica de otimização usada para salvar o resultado de uma função para que, quando ela for chamada novamente com os mesmos parâmetros, o valor já calculado possa ser reutilizado, ao invés de recalculado. Em outras palavras: “se eu já calculei isso antes, pra quê fazer de novo?”
+              </Text>
+            </article>
+
+            {/* useReducer */}
+            <article>
+              <H2>useReducer</H2>
+              <Text>aqui</Text>
             </article>
 
             <UpPage />
