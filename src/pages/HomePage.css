@@ -1,0 +1,27 @@
+.index-wrapper {
+    display: flex;
+    gap: .875rem;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.index-icon {
+    width: 56px;
+    height: auto;
+}
+
+.index-title {
+    color: var(--spotlight-color);
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.index-description {
+    color: var(--dark-color);
+    text-align: justify;
+    text-indent: 3rem;
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.75rem;
+    margin-bottom: 4rem;
+}

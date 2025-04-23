@@ -1,0 +1,6 @@
+.item-container {
+    width: 100%;
+    padding: 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+}
