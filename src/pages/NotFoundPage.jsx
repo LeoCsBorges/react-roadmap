@@ -1,9 +1,9 @@
-import { ItemContainer } from "@/components/ui/ItemContainer"
+import { ContentContainer } from "@/components/ui/ContentContainer"
 
 export const NotFoundPage = () => {
     return (
-        <ItemContainer>
+        <ContentContainer>
             <h1>Not Found</h1>
-        </ItemContainer>
+        </ContentContainer>
     )
 }

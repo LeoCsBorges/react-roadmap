@@ -1,11 +1,11 @@
-import { H1, H2, H3, Text, TextStrong, UpPage } from '@/components/ui/Item'
-import { ItemContainer } from '@/components/ui/ItemContainer';
+import { H1, H2, H3, Text, TextStrong, UpPage } from '@/components/ui/Content'
+import { ContentContainer } from '@/components/ui/ContentContainer';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 export function ComponentBasicsPage() {
     return (
-        <ItemContainer>
+        <ContentContainer>
           <H1>Noções básicas de Componentes</H1>
 
           {/* JSX */}
@@ -600,6 +600,6 @@ const InputField = ({ value, onChange, children }) => (
           </article>
 
           <UpPage />
-        </ItemContainer>
+        </ContentContainer>
     )
 }

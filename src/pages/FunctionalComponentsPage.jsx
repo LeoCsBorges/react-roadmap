@@ -1,11 +1,11 @@
-import { H1, H2, H3, Text, TextStrong, UpPage } from '@/components/ui/Item'
-import { ItemContainer } from '@/components/ui/ItemContainer';
+import { H1, H2, H3, Text, TextStrong, UpPage } from '@/components/ui/Content'
+import { ContentContainer } from '@/components/ui/ContentContainer';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 export function FunctionalComponentsPage() {
     return (
-        <ItemContainer >
+        <ContentContainer >
             <H1>Componentes Funcionais</H1>
             <H2>Definição</H2>
             <Text>
@@ -364,6 +364,6 @@ export default App;
             </Text>
 
             <UpPage />
-        </ItemContainer>
+        </ContentContainer>
     )
 }

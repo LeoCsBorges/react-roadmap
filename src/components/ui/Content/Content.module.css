@@ -1,4 +1,4 @@
-.item__h1 {
+.h1 {
     font-size: 2rem;
     font-weight: 700;
     padding-bottom: .5rem;
@@ -6,14 +6,14 @@
     margin-block: 1.5rem;
 }
 
-.item__h2 {
+.h2 {
     font-size: 1.25rem;
     font-weight: 600;
     margin-top: 1.75rem;
     margin-bottom: 1.25rem;
 }
 
-.item__h3 {
+.h3 {
     font-size: 1.1rem;
     font-weight: 500;
     margin-top: 2rem;
@@ -21,14 +21,14 @@
     color: var(--spotlight-color);
 }
 
-.item__text {
+.text {
     text-indent: 2rem;
     text-align: justify;
     line-height: 1.25rem;
     margin-block: .875rem;
 }
 
-.item__text--strong {
+.textstrong {
     font-weight: 700;
 }
 

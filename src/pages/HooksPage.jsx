@@ -1,12 +1,12 @@
-import { H1, H2, H3, Text, TextStrong, UpPage } from '@/components/ui/Item'
-import { ItemContainer } from '@/components/ui/ItemContainer';
+import { H1, H2, H3, Text, TextStrong, UpPage } from '@/components/ui/Content'
+import { ContentContainer } from '@/components/ui/ContentContainer';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import reducerImg from '@/assets/images/useReducer_breakdown.png'
 
 export function HooksPage() {
     return (
-        <ItemContainer>
+        <ContentContainer>
             <H1>React Hooks</H1>
 
             {/* intro */}
@@ -761,6 +761,6 @@ const BotaoTema = () => {
             </article>
 
             <UpPage />
-        </ItemContainer>
+        </ContentContainer>
     );
 }

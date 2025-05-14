@@ -3,7 +3,7 @@ import { Outlet } from "react-router";
 import {
     Masthead,
     HeroBanner,
-    AsideMenu,
+    Sidebar,
     Footer,
 } from "@/components/layout"
 
@@ -13,7 +13,7 @@ export const RootLayout = () => {
             <Masthead />
             <HeroBanner />
             <section style={{marginBlock: "2rem", display: "flex"}}>
-                <AsideMenu />
+                <Sidebar />
                 <Outlet />
             </section>
             <Footer />

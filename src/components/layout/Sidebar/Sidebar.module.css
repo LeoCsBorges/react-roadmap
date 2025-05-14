@@ -1,4 +1,4 @@
-.aside {
+.sidebar {
     width: 25%;
     padding: 32px 24px;
     color: var(--light-color);
@@ -8,12 +8,12 @@
     border-bottom-right-radius: 56px;
 }
 
-.aside__wrapper {
+.sidebar__wrapper {
     position: sticky;
     top: 16px;
 }
 
-.aside__title {
+.sidebar__title {
     font-size: 1.25em;
     font-weight: 600;
     text-align: center;
@@ -22,14 +22,14 @@
     border-bottom: 1px solid var(--light-color);
 }
 
-.aside__list {
+.sidebar__list {
     padding-block: 12px;
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-.aside a {
+.sidebar a {
     display: block;
     padding: 8px;
     text-decoration: none;
@@ -37,10 +37,10 @@
     transition: opacity .5s ease;
 }
 
-.aside__list:hover a {
+.sidebar__list:hover a {
     opacity: 0.5;
 }
-.aside__list:has(a:hover) a:hover {
+.sidebar__list:has(a:hover) a:hover {
     opacity: 1;
 }
 

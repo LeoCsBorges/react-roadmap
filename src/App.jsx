@@ -19,7 +19,6 @@ function App() {
           <Route path="component-basics" element={<ComponentBasicsPage />} />
           <Route path="rendering" element={<RenderingPage />} />
           <Route path="hooks" element={<HooksPage />} />
-
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
