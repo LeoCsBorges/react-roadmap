@@ -760,6 +760,281 @@ const BotaoTema = () => {
               </Text>
             </article>
 
+            {/* Customs Hooks */}
+            <article>
+              <H2>Como criar Custom Hooks</H2>
+              <Text>
+                Antes de criarmos um custom hook, você precisa saber que existem duas regras para criar um: 
+                <ol style={{listStyle: 'inside'}}>
+                  <li style={{marginBlock: '1em'}}>
+                    Custom Hooks devem ser nomeados com o prefixo "use". Por exemplo, um custom hook pode se chamar useLocalStorage ou useAuthentication. No nosso caso, o custom hook será chamado useBoolean; 
+                  </li>
+                  <li style={{marginBlock: '1em'}}>
+                    Custom Hooks consistem em Hooks nativos do React ou de outros custom hooks. Portanto, um custom hook é sempre uma nova composição de um ou mais hooks. Se um custom hook não usa nenhum hook internamente, ele não é de fato um custom hook e não deve ter o prefixo "use".
+                  </li>
+                </ol>
+              </Text>
+              <Text>
+                Vamos criar um custom hook chamado useBoolean, mas antes de implementarmos esse hook, vamos entender qual problema ele resolve. Vamos começar com um pequeno exemplo:
+              </Text>
+              <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`import * as React from 'react';
+
+function App() {
+  const [isToggle, setToggle] = React.useState(false);
+
+  const handleToggle = () => setToggle(!isToggle);
+
+  return (
+    <div>
+      <button type="button" onClick={handleToggle}>
+        Toggle
+      </button>
+
+      {isToggle.toString()}
+    </div>
+  );
+}
+
+export default App;`
+              } </SyntaxHighlighter>
+              <Text>
+                O componente renderiza um botão que alterna um valor booleano. Em uma aplicação React do mundo real, não há muito o que se possa fazer com um boolean com state. Ou você o alterna (como no exemplo anterior), ou define explicitamente como true ou false (como no próximo exemplo):
+              </Text>
+              <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`import * as React from 'react';
+
+function App() {
+  const [isToggle, setToggle] = React.useState(false);
+
+  const handleToggle = () => setToggle(!isToggle);
+  const handleTrue = () => setToggle(true);
+  const handleFalse = () => setToggle(false);
+
+  return (
+    <div>
+      <button type="button" onClick={handleToggle}>
+        Toggle
+      </button>
+      <button type="button" onClick={handleTrue}>
+        To True
+      </button>
+      <button type="button" onClick={handleFalse}>
+        To False
+      </button>
+
+      {isToggle.toString()}
+    </div>
+  );
+}
+
+export default App;`
+              } </SyntaxHighlighter>
+            <Text>
+              Alguns desenvolvedores podem argumentar que poderíamos ter usado inline handlers em vez disso, assim evitaríamos a declaração repetitiva de event handlers. No entanto, pessoalmente tento evitar inline handlers sempre que posso, porque eles injetam muita lógica no JSX, que, idealmente, deveria estar definida entre a assinatura da função do componente e a instrução de return. Mas isso é apenas uma preferência pessoal.
+            </Text>
+            <Text>
+              De qualquer forma, toda vez que você usa um boolean com state, acaba encontrando os mesmos detalhes de implementação: ou você alterna o valor, ou define para um de seus dois possíveis estados. Para evitar esse código repetitivo ao usar booleans com state em mais de um componente React, comecei a criar um custom hook para isso:
+            </Text>
+            <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`const useBoolean = () => {
+  const [state, setState] = React.useState();
+
+  const handleTrue = () => setState(true);
+  const handleFalse = () => setState(false);
+  const handleToggle = () => setState(!state);
+
+  return [
+    state,
+    {
+      setTrue: handleTrue,
+      setFalse: handleFalse,
+      setToggle: handleToggle,
+    },
+  ];
+};`
+              } </SyntaxHighlighter>
+              <Text>
+                Basicamente, todos os detalhes de implementação — ou seja, o state e os event handlers — foram movidos para este custom hook chamado useBoolean. Além disso, o custom hook retorna o state e as funções para atualizá-lo em um array.
+              </Text>
+              <Text>
+                Retornar um array é uma boa prática ao retornar múltiplos valores de um custom hook, porque os Hooks nativos do React — quando retornam múltiplos valores — utilizam arrays e, portanto, também a array destructuring. Usar array destructuring traz a vantagem de permitir nomear os valores desestruturados como quiser (o que gera menos código do que renomear valores no caso de object destructuring).
+              </Text>
+              <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`const useBoolean = (initialState = false) => {
+  const [state, setState] = React.useState(initialState);
+
+  const handleTrue = () => setState(true);
+  const handleFalse = () => setState(false);
+  const handleToggle = () => setState(!state);
+
+  return [
+    state,
+    {
+      setTrue: handleTrue,
+      setFalse: handleFalse,
+      setToggle: handleToggle,
+    },
+  ];
+};`
+              } </SyntaxHighlighter>
+              <Text>
+                Uma boa adição seria permitir também o uso de um initial state (como visto no último trecho de código). Voltando ao nosso componente App, podemos utilizar esse novo custom hook passando um initial state e usando os valores retornados para exibir o state e atualizá-lo:
+              </Text>
+              <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`function App() {
+  const [isToggle, { setToggle }] = useBoolean(false);
+
+  return (
+    <div>
+      <button type="button" onClick={setToggle}>
+        Toggle
+      </button>
+
+      {isToggle.toString()}
+    </div>
+  );
+}`
+              } </SyntaxHighlighter>
+              <Text>
+                Como o custom hook não oferece apenas a função para alternar o boolean com state, mas também para defini-lo explicitamente como true ou false, podemos utilizar essas funções também:
+              </Text>
+              <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`function App() {
+  const [isToggle, {
+    setToggle,
+    setTrue,
+    setFalse,
+  }] = useBoolean(false);
+
+  return (
+    <div>
+      <button type="button" onClick={setToggle}>
+        Toggle
+      </button>
+      <button type="button" onClick={setTrue}>
+        To True
+      </button>
+      <button type="button" onClick={setFalse}>
+        To False
+      </button>
+
+      {isToggle.toString()}
+    </div>
+  );
+}`
+              } </SyntaxHighlighter>
+              <Text>
+                Basicamente, extraímos o boolean com state e todos os event handlers — que operam sobre esse boolean — para dentro de um custom hook. Ao usar esse custom hook sempre que precisarmos de um boolean com state, poupamos a definição dos event handlers, que incluem os detalhes de implementação sobre como manipular o boolean, e usamos diretamente as funções retornadas pelo hook.
+              </Text>
+              <Text>
+                Concluindo, aprendemos como criar um custom hook usando um dos Hooks nativos do React, o useState. Esse custom hook não é complexo, mas serve para mostrar como você pode reduzir a complexidade e a redundância no seu projeto React.
+              </Text>
+            </article>
+
+            {/* Melhors práticas */}
+            <article>
+              <H2>Melhores Práticas para o uso de Hooks</H2>
+              <Text>
+                Desde a introdução dos Hooks no React, eles transformaram a maneira como escrevemos componentes funcionais, permitindo o uso de state, side-effects, contexto e outras funcionalidades avançadas sem a necessidade de classes. No entanto, para garantir que seu código continue limpo, eficiente e fácil de manter, é essencial adotar algumas boas práticas no uso dos Hooks. Neste artigo, exploramos essas práticas com explicações claras e sugestões úteis.
+              </Text>
+
+              <H3>1. Sempre siga as regras dos Hooks</H3>
+              <Text>
+                As duas regras fundamentais dos Hooks são:
+              </Text>
+              <ol style={{listStyle: 'inside', marginLeft: '3em'}}>
+                <li style={{marginBlock: '1em'}} >
+                  <TextStrong>Chame Hooks apenas no nível superior:</TextStrong> nunca os utilize dentro de loops, condições ou funções aninhadas. Isso garante que a ordem dos Hooks seja sempre a mesma em cada renderização.
+                </li>
+                <li style={{marginBlock: '1em'}} >
+                  <TextStrong>Chame Hooks apenas de componentes funcionais ou de custom hooks:</TextStrong> isso significa que você não deve usá-los fora do contexto React, como em funções utilitárias comuns.
+                </li>
+              </ol>
+              <Text>
+                Para reforçar essas regras, recomenda-se o uso da biblioteca oficial eslint-plugin-react-hooks, que alerta automaticamente quando elas são violadas.
+              </Text>
+
+              <H3>2. Use Hooks nativos sempre que possível</H3>
+              <Text>
+                O React oferece uma série de Hooks nativos muito poderosos, como useState, useEffect, useContext, useReducer, useMemo, useCallback, entre outros. Sempre que o comportamento desejado puder ser alcançado com um Hook nativo, prefira essa abordagem em vez de reinventar a roda.
+              </Text>
+
+              <H3>3. Crie custom hooks para lógica reutilizável</H3>
+              <Text>
+                Se você perceber que está repetindo a mesma lógica de useState, useEffect ou outros Hooks em vários componentes, provavelmente é hora de extrair essa lógica em um custom hook. Um custom hook é apenas uma função que pode utilizar outros Hooks internamente e retorna os dados e funções necessários.
+              </Text>
+              <Text>
+                Por convenção, o nome de todo custom hook deve começar com use — como useAuth, useForm, useBoolean. Isso permite que o linter e o próprio React tratem essa função da maneira correta.
+              </Text>
+
+              <H3>4. Evite lógica complexa diretamente no JSX</H3>
+              <Text>
+                Colocar lógica de estado e efeitos diretamente no JSX, como inline handlers ou chamadas complexas de função, pode dificultar a leitura e manutenção do componente. Sempre que possível, mova essa lógica para o corpo do componente, entre a definição da função e o retorno (return) do JSX. Isso torna o código mais limpo e fácil de testar.
+              </Text>
+
+              <H3>5. Use useEffect de forma consciente</H3>
+              <Text>
+                O useEffect é um Hook poderoso, mas fácil de ser usado em excesso. Evite fazer com que efeitos colaterais rodem desnecessariamente — sempre defina corretamente os valores no array de dependências para que o efeito execute apenas quando necessário. Além disso, se seu useEffect estiver fazendo muitas coisas, considere dividi-lo em múltiplos efeitos com responsabilidades menores e mais específicas.
+              </Text>
+
+              <H3>6. Otimize re-renderizações com useMemo e useCallback</H3>
+              <Text>
+                Os Hooks useMemo e useCallback são úteis para evitar re-renderizações desnecessárias ou reexecuções de funções caras, especialmente em componentes com alto desempenho. No entanto, eles não devem ser usados em excesso: só aplique esses Hooks quando houver um ganho real mensurável, pois seu uso também tem um custo computacional.
+              </Text>
+
+              <H3>7. Organize e nomeie bem seus hooks</H3>
+              <Text>
+                Mantenha seus custom hooks organizados em uma pasta separada (/hooks) e nomeie-os de forma que reflitam claramente sua funcionalidade. Isso facilita a manutenção e o reuso em outros projetos ou partes da aplicação.
+              </Text>
+
+              <H3>8. Evite abusar de múltiplos estados desconexos</H3>
+              <Text>
+                Se você estiver gerenciando muitos estados separados com useState, considere o uso de useReducer, que ajuda a centralizar a lógica de atualização e torna o código mais previsível, especialmente em componentes mais complexos.
+              </Text>
+
+              <H3>9. Trate efeitos assíncronos com cuidado</H3>
+              <Text>
+                Quando usar async dentro de um useEffect, não torne a função principal do efeito assíncrona diretamente. Em vez disso, defina uma função interna assíncrona e chame-a no corpo do useEffect. Também lembre-se de limpar efeitos quando necessário, especialmente ao lidar com subscriptions ou chamadas de API que podem se tornar obsoletas.
+              </Text>
+              <SyntaxHighlighter language='jsx' style={dracula} showLineNumbers wrapLines wrapLongLines>
+                {
+`useEffect(() => {
+  let isActive = true;
+
+  async function fetchData() {
+    const result = await fetchSomething();
+    if (isActive) {
+      setData(result);
+    }
+  }
+
+  fetchData();
+
+  return () => {
+    isActive = false;
+  };
+}, []);
+`
+              } </SyntaxHighlighter>
+
+              <H3>10. Documente seus custom hooks</H3>
+              <Text>
+                Assim como funções ou componentes importantes, custom hooks devem ser bem documentados: explique o que eles fazem, quais parâmetros recebem, o que retornam, e quando devem ser usados. Isso ajuda outros desenvolvedores (ou você no futuro) a entender rapidamente como utilizar o hook corretamente.
+              </Text>
+
+              <H3>Conclusão</H3>
+              <Text>
+                Os Hooks tornaram o React mais poderoso e flexível, mas com esse poder vem a responsabilidade de usá-los com clareza e cuidado. Seguindo boas práticas como nomeação adequada, separação de responsabilidades, uso criterioso de efeitos e extração de lógica reutilizável, você pode manter seu código mais limpo, legível e sustentável. Ao dominar essas práticas, você estará apto a criar aplicações React mais robustas e escaláveis.
+              </Text>
+            </article>
+
             <UpPage />
         </ContentContainer>
     );
