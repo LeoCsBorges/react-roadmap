@@ -42,7 +42,7 @@ export const RoutersPage = () => {
             </article>
 
             <article>
-                <H3>Exemplo prático de roteamento</H3>
+                <H2>Exemplo prático de roteamento</H2>
                 <Text>
                     Veja um exemplo simples de como configurar rotas em uma aplicação React:
                 </Text>
@@ -73,7 +73,7 @@ function App() {
             </article>
 
             <article>
-                <H3>Navegação programática com useNavigate</H3>
+                <H2>Navegação programática com useNavigate</H2>
                 <Text>
                     Além da navegação por links, o React Router também permite redirecionar usuários de forma programada. Isso é útil após enviar um formulário ou fazer login, por exemplo. Para isso, usamos o hook useNavigate:
                 </Text>
@@ -95,7 +95,7 @@ function Login() {
             </article>
 
             <article>
-                <H3>Recursos adicionais</H3>
+                <H2>Recursos adicionais</H2>
                 <Text>O React Router também suporta:</Text>
                 <ol style={{listStyle: 'inside', marginLeft: '3em'}}>
                     <li style={{marginBlock: '.5em'}}>Rotas com parâmetros, como /usuarios/:id</li>
@@ -107,7 +107,7 @@ function Login() {
             </article>
 
             <article>
-                <H3>Conclusão</H3>
+                <H2>Conclusão</H2>
                 <Text>
                     O React Router, com seus componentes como {`<Route>`} e {`<BrowserRouter>`}, é essencial para o desenvolvimento de SPAs em React. Ele permite criar navegação eficiente e organizada, além de oferecer uma série de recursos que tornam o desenvolvimento mais robusto e escalável. Dominar essa biblioteca é um passo importante para qualquer desenvolvedor React que deseja criar aplicações modernas, com rotas bem estruturadas e uma boa experiência para o usuário.
                 </Text>
