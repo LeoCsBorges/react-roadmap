@@ -3,7 +3,7 @@ import { ContentContainer } from '@/components/ui/ContentContainer';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-export function ComponentBasicsPage() {
+export const ComponentBasicsPage = () => {
     return (
         <ContentContainer>
           <H1>Noções básicas de Componentes</H1>
@@ -603,3 +603,5 @@ const InputField = ({ value, onChange, children }) => (
         </ContentContainer>
     )
 }
+
+export default ComponentBasicsPage;

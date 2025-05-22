@@ -332,7 +332,7 @@ export { ReactClientComponent };
     `
 ];
 
-export function ComponentsPage() {
+export const ComponentsPage = () => {
     return (
       <ContentContainer>
         <H1>Componentes</H1>
@@ -549,4 +549,6 @@ function MeuComponente({title}) {
         <UpPage />
       </ContentContainer>
     );
-}
+};
+
+export default ComponentsPage;

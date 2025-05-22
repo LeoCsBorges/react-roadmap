@@ -4,7 +4,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import reducerImg from '@/assets/images/useReducer_breakdown.png'
 
-export function HooksPage() {
+export const HooksPage = () => {
     return (
         <ContentContainer>
             <H1>React Hooks</H1>
@@ -1038,4 +1038,6 @@ export default App;`
             <UpPage />
         </ContentContainer>
     );
-}
+};
+
+export default HooksPage;

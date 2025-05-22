@@ -20,3 +20,5 @@ export const RootLayout = () => {
         </>
     )
 };
+
+export default RootLayout;

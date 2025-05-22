@@ -3,7 +3,7 @@ import { ContentContainer } from '@/components/ui/ContentContainer';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-export function RenderingPage() {
+export const RenderingPage = () => {
     return (
         <ContentContainer>
             <H1>Renderização</H1>
@@ -325,4 +325,6 @@ function App() {
             <UpPage />
         </ContentContainer>
     );
-}
+};
+
+export default RenderingPage;

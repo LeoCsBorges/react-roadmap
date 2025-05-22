@@ -3,7 +3,7 @@ import { ContentContainer } from '@/components/ui/ContentContainer';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-export function FunctionalComponentsPage() {
+export const FunctionalComponentsPage = () => {
     return (
         <ContentContainer >
             <H1>Componentes Funcionais</H1>
@@ -366,4 +366,6 @@ export default App;
             <UpPage />
         </ContentContainer>
     )
-}
+};
+
+export default FunctionalComponentsPage;

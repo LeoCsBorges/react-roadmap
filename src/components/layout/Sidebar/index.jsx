@@ -22,7 +22,9 @@ export function Sidebar() {
                     <li>
                         <MenuLink to='/hooks'>Hooks</MenuLink>
                     </li>
-                    <li>Routers</li>
+                    <li>
+                        <MenuLink to='/routers'>Routers</MenuLink>
+                    </li>
                     <li>State Management</li>
                     <li>Writting CSS</li>
                     <li>Components / Libraries</li>

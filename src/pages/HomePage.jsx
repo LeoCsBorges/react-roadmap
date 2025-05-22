@@ -17,3 +17,5 @@ export const HomePage = () => {
         </ContentContainer>
     )
 }
+
+export default HomePage;
