@@ -26,7 +26,10 @@ export function Sidebar() {
                         <MenuLink to='/routers'>Routers</MenuLink>
                     </li>
                     <li>State Management</li>
-                    <li>Writting CSS</li>
+
+                    <li>
+                        <MenuLink to='/writtingcss'>Writting CSS</MenuLink>
+                    </li>
                     <li>Components / Libraries</li>
                     <li>Headless Component Libraries</li>
                     <li>API calls</li>

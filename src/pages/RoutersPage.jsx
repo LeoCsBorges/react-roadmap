@@ -6,7 +6,7 @@ import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 export const RoutersPage = () => {
     return (
         <ContentContainer>
-            <H1>Route e React Router no React</H1>
+            <H1>Route e React Router</H1>
             <article>
                 <H2>O que é uma SPA?</H2>
                 <Text>
